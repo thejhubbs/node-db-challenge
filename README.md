@@ -53,7 +53,7 @@ a third table with a primary key which IS the unique combination of 2 ids
 ## Minimum Viable Product
 
 Take the steps necessary to complete the project from scratch. Start by initializing your project with a `package.json` and go from there.
-
+ 
 Complete the following tasks:
 
 - [x ] Design the data model and use _knex migrations_ to create the database and tables.
