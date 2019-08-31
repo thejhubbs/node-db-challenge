@@ -15,24 +15,25 @@ function findProjects() {
   return db('projects');
 }
 
-function addProjects(data) {
+function addProject(data) {
   return db('projects')
-    .insert(scheme)
+    .insert(data)
     .then(ids => {
-      return getById(ids[0]);
+      return "Success."
     });
 }
 
 //TASK FUNCTIONS
 function findTasks() {
-  return db('tasks');
+  return db('tasks')
+    .join('projects', 'tasks.project_id', 'projects.project_id');
 }
 
-function addTasks(data) {
+function addTask(data) {
   return db('tasks')
-    .insert(scheme)
+    .insert(data)
     .then(ids => {
-      return getById(ids[0]);
+      return "Success";
     });
 }
 
@@ -41,10 +42,10 @@ function findResources() {
   return db('resources');
 }
 
-function addResources(data) {
+function addResource(data) {
   return db('resources')
-    .insert(scheme)
+    .insert(data)
     .then(ids => {
-      return getById(ids[0]);
+      return "Success";
     });
 }

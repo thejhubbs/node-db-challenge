@@ -7,14 +7,23 @@ exports.up = function(knex) {
         .unique()
         .notNullable(); //Name- unique & required
       tbl.text('project_description'); //Description
-      tbl.boolean('project_completed'); //Boolean indicating completion
+      tbl.boolean('project_completed')
+        .defaultTo(false); //Boolean indicating completion, defaults to false
     })
     .createTable('tasks', tbl => {
       tbl.increments('task_id'); //Id
+      tbl.integer('project_id')
+        .unsigned()
+        .notNullable()
+        .references('project_id')
+        .inTable('projects')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE'); //Foreign key
       tbl.text('task_description', 128)
         .notNullable(); //Name- required
       tbl.text('task_notes'); //Any other notes about the project.
-      tbl.boolean('task_completed'); //Boolean indicating completion
+      tbl.boolean('task_completed')
+        .defaultTo(false); //Boolean indicating completion, defaults to false
     })
     .createTable('resources', tbl => {
       tbl.increments('resource_id');
@@ -46,8 +55,8 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
+    .dropTableIfExists('project_resources')
     .dropTableIfExists('projects')
     .dropTableIfExists('tasks')
-    .dropTableIfExists('resources')
-    .dropTableIfExists('project_resources');
+    .dropTableIfExists('resources');
 };
