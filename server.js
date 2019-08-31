@@ -9,7 +9,7 @@ const Db = require('./data/model.js');
 server.get('/projects', (req, res) => {
   Db.findProjects()
   .then(itemArray => {
-    res.json( itemArray );
+    res.json( itemArray.map(item =>  { return { ...item, project_completed: !!item.project_completed }} ) );
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get items' });
@@ -36,7 +36,7 @@ server.post('/projects', (req, res) => {
 server.get('/tasks', (req, res) => {
   Db.findTasks()
   .then(itemArray => {
-    res.json( itemArray );
+    res.json( itemArray.map(item =>  { return { ...item, task_completed: !!item.task_completed,  project_completed: !!item.project_completed }} ) );
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get items' });
